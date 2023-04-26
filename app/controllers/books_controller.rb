@@ -1,13 +1,13 @@
 class BooksController < ApplicationController
-  before_action :authenticate_user!
+  before_action :ensure_correct_user, only: [:edit, :update, :destroy]
   def show
     @book = Book.find(params[:id])
     @user = current_user
-    @new = Book.new
+    @book_new = Book.new
   end
 
   def index
-    @book = Book.new
+    @book = Book.new#新規投稿フォーム用の変数
     @books = Book.all
   end
 
@@ -24,9 +24,6 @@ class BooksController < ApplicationController
 
   def edit
     @book = Book.find(params[:id])
-    unless @book.user == current_user
-      redirect_to books_path
-    end
   end
 
   def update
@@ -41,12 +38,19 @@ class BooksController < ApplicationController
   def destroy
     @book = Book.find(params[:id])
     @book.destroy
-    redirect_to books_path
+    redirect_to books_path, notice: "successfully delete book!"
   end
 
   private
 
-  def book_params
+  def book_params#データベースに保存していいものを許可するメソッド
     params.require(:book).permit(:title, :body)
+  end
+
+  def ensure_correct_user
+    @book = Book.find(params[:id])
+    unless @book.user == current_user
+      redirect_to books_path
+    end
   end
 end
