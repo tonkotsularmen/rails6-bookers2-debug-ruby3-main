@@ -39,17 +39,18 @@
       </table>
       <div>
         <% @book.book_comments.each do |book_comment| %><!--book_commentsは何か？-->
-        <p>
+        <p class='col-mb-0'>
           <%= image_tag book_comment.user.get_profile_image, size:"100x100" %>
           <%= book_comment.comment %>
-          <%= link_to "Destroy", book_book_comment_path(book_comment.book, book_comment), method: :delete %>
-        </p><!--(book_comment.book, book_comment)はネストしてるからこういう書き方？-->
-        <p><%= link_to "#{book_comment.user.name}", user_path(book_comment.user.id) %></p>
+          <%= link_to "Destroy", book_book_comment_path(book_comment.book, book_comment), method: :delete, class:"btn btn-sm btn-danger" %><br>
+        <!--(book_comment.book, book_comment)はネストしてるからこういう書き方？-->
+        <%= link_to "#{book_comment.user.name}", user_path(book_comment.user.id) %>
+        </p>
         <% end %>
       </div>
       <div>
         <%= form_with model: [@book, @book_comment] do |f| %>
-          <%= f.text_area :comment %><br>
+          <%= f.text_area :comment, class:"form-control type=text"%><br>
           <%= f.submit "送信" %>
         <% end %>
       </div>
