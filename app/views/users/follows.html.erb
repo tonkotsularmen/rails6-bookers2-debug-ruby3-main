@@ -2,6 +2,19 @@
   <div class='row'>
     <div class='col-md-12'>
       <h2>Follow Users</h2>
+      <% if current_user.followed_by?(@user) %>
+        <% @users.each do |user| %>
+        <tr>
+          <td><%= image_tag user.get_profile_image, size: '50x50' %></td>
+          <td><%= user.name %></td>
+          <td><%= "フォロー数:#{user.followers.count}" %></td><!--最初user.active_relationships.countにしてたけどなぜダメなのか？聞き忘れた-->
+          <td><%= "フォロワー数:#{user.followeds.count}" %></td>
+          <td><%= link_to 'Show', user %></td>
+        </tr>
+        <% end %>
+      <% else %>
+        ユーザーはいません
+      <% end %>
     </div>
   </div>
 </div>
