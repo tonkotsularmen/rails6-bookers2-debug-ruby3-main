@@ -30,6 +30,7 @@ class User < ApplicationRecord
   end
 
   def followed_by?(user)
-    active_relationships.find_by(followed_id: user.id).present?
+    active_relationships.exists?(followed_id: user.id)
+    #active_relationships.find_by(followed_id: user.id).present?
   end
 end
