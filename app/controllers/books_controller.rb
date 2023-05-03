@@ -42,6 +42,8 @@ class BooksController < ApplicationController
     redirect_to books_path, notice: "successfully delete book!"
   end
 
+
+
   private
 
   def book_params#データベースに保存していいものを許可するメソッド
