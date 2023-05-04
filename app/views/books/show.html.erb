@@ -17,8 +17,8 @@
           </td>
           <td><%= link_to @book.title, @book %></td>
           <td><%= @book.body %></td>
-           <td>コメント数: <%= @book.book_comments.count %></td>
-           <td class="favorire_buttons_<%= @book.id %>">
+           <td id="comments_count"><%= render "book_comments/comments_count", book: @book %></td>
+           <td class="favorite_buttons_<%= @book.id %>">
             <%= render "favorites/favorite-btn", book: @book %>
           </td>
           <% if @book.user == current_user %>
@@ -27,32 +27,13 @@
           <% end %>
         </tr>
       </table>
-
-      <table>
-        <tbody>
-          <% @book.book_comments.each do |book_comment| %><!--book_commentsは何か？-->
-          <tr>
-            <td>
-              <%= link_to user_path(book_comment.user) do %>
-                <%= image_tag book_comment.user.get_profile_image, size: "100x100" %><br>
-                <%= book_comment.user.name %>
-              <% end %>
-            </td>
-            <td><%= book_comment.comment %></td>
-            <td>
-              <% if book_comment.user == current_user %>
-                <%= link_to "Destroy", book_book_comment_path(@book, book_comment), method: :delete, class: "btn btn-danger pullright" %>
-              <% end %><!--(book_comment.book, book_comment)はネストしてるからこういう書き方？-->
-            </td>
-          </tr>
-          <% end %>
-        </tbody>
-      </table>
-      <div>
-        <%= form_with model: [@book, @book_comment] do |f| %>
-          <%= f.text_area :comment, rows:'5',placeholder: "コメントをここに", class:"w-100" %>
-          <%= f.submit "送信", class:"btn btn-lg btn-base-1 mt-20" %>
-        <% end %>
+      <div id="comments_area">
+        <table>
+          <%= render "book_comments/book_comments", book: @book %><!--コメントを表示する部分テンプレート-->
+        </table>
+      </div>
+      <div id="comments_form">
+        <%= render "book_comments/comments_form", book: @book, book_comment: @book_comment %><!--コメントを投稿する部分テンプレート-->
       </div>
     </div>
   </div>
