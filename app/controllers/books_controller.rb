@@ -9,7 +9,7 @@ class BooksController < ApplicationController
 
   def index
     @book = Book.new#新規投稿フォーム用の変数
-    @books = Book.all
+    @books = Book.includes(:favorited_users).sort {|a,b| b.favorited_users.size <=> a.favorited_users.size}
   end
 
   def create
