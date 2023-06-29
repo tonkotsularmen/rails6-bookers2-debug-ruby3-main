@@ -35,7 +35,10 @@
         <div class='row'>
           <% if current_user.followed_by?(@user) %>
             <%= link_to user_relationships_path(@user), method: :delete, class:"btn btn-info" do %>
-            フォローを外す
+              フォローを外す
+            <% end %>
+            <% if current_user != @user %>
+              <%= link_to 'chatを始める', chat_path(@user.id)%>
             <% end %>
           <% else %>
             <%= link_to user_relationships_path(@user), method: :post, class:"btn btn-success" do %>
