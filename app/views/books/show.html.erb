@@ -1,12 +1,12 @@
-<div class='container'>
+<div class='container-lg'>
   <div class='row'>
-    <div class='col-md-3'>
+    <div class='col-md-2'>
       <h2>User info</h2>
       <%= render 'users/info', user: @book.user %>
       <h2 class="mt-3">New book</h2>
       <%= render 'form', book: @book_new %>
     </div>
-    <div class='col-md-8 offset-md-1'>
+    <div class=' offset-md-1 col-md-9'>
   		<h2>Book detail</h2>
   		<table class='table'>
   		  <tr>
@@ -18,6 +18,7 @@
           <td><%= link_to @book.title, @book %></td>
           <td><%= @book.body %></td>
            <td id="comments_count"><%= render "book_comments/comments_count", book: @book %></td>
+           <td>閲覧数：<%= @book.read_counts.count %></td>
            <td class="favorite_buttons_<%= @book.id %>">
             <%= render "favorites/favorite-btn", book: @book %>
           </td>

@@ -3,17 +3,18 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
-  
+
   has_many :books
   has_many :favorites,             dependent: :destroy
   has_many :book_comments,         dependent: :destroy
+  has_many :read_counts,           dependent: :destroy
   has_many :user_rooms
   has_many :chats
-  
+
   has_many :active_relationships, class_name: "Relationship",  #デフォルトではactive_relationshipモデルを探しに行くのでRelationshipモデルを探しに行ってよと設定する必要がある
                                  foreign_key: "follower_id",  #デフォルトでは{モデル}名_idを探しに行くので設定してあげる
                                    dependent: :destroy
-                                   
+
   has_many :followers,               through: :active_relationships,
                                       source: :followed
   #Userモデル(class)のインスタンスは、followingっていうメソッドを呼び出すことができる。呼び出す時に、through以下とsource以下を活用する。
@@ -21,10 +22,10 @@ class User < ApplicationRecord
   has_many :passive_relationships, class_name: "Relationship",
                                   foreign_key: "followed_id",
                                     dependent: :destroy
-                                    
+
   has_many :followeds,                through: :passive_relationships,
                                        source: :follower
-                        
+
   has_one_attached :profile_image
   validates :name, length: { minimum: 2, maximum: 20 }, uniqueness: true
   validates :introduction, length: { maximum: 50 }
@@ -38,7 +39,7 @@ class User < ApplicationRecord
        @user = User.all
     end
   end
-  
+
   def self.guest
     find_or_create_by!(name: 'guestuser' ,email: 'guest@example.com') do |user|
       user.password = SecureRandom.urlsafe_base64
