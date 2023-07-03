@@ -20,7 +20,9 @@ Rails.application.routes.draw do
     get :followers, on: :member
     get "search", to: "users#search"
   end
-
+  
+  resources :groups, except: [:destroy]
+  
   get "search" => "searches#search", as: 'search'
   get 'chat/:id' => 'chats#show', as: 'chat'
   resources :chats, only: [:create]

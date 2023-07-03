@@ -10,6 +10,9 @@ class User < ApplicationRecord
   has_many :read_counts,           dependent: :destroy
   has_many :user_rooms
   has_many :chats
+  
+  has_many :group_users
+  has_many :groups, through: :group_users
 
   has_many :active_relationships, class_name: "Relationship",  #デフォルトではactive_relationshipモデルを探しに行くのでRelationshipモデルを探しに行ってよと設定する必要がある
                                  foreign_key: "follower_id",  #デフォルトでは{モデル}名_idを探しに行くので設定してあげる
