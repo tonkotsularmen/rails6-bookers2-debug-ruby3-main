@@ -14,8 +14,16 @@ class BooksController < ApplicationController
   end
 
   def index
+    if params[:latest]
+     @books = Book.latest
+   elsif params[:old]
+     @books = Book.old
+   elsif params[:star_count]
+     @books = Book.star_count
+    else
+     @books = Book..includes(:favorited_users).sort {|a,b| b.favorited_users.size <=> a.favorited_users.size}
+   end
     @book = Book.new#新規投稿フォーム用の変数
-    @books = Book.includes(:favorited_users).sort {|a,b| b.favorited_users.size <=> a.favorited_users.size}
   end
 
   def create
