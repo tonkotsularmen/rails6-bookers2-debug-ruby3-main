@@ -1,6 +1,6 @@
 class BooksController < ApplicationController
   before_action :ensure_correct_user, only: [:edit, :update, :destroy]
-  
+
   def show
     @book = Book.find(params[:id])
     @user = current_user
@@ -53,7 +53,7 @@ class BooksController < ApplicationController
   private
 
   def book_params#データベースに保存していいものを許可するメソッド
-    params.require(:book).permit(:title, :body)
+    params.require(:book).permit(:title, :body, :star)
   end
 
   def ensure_correct_user

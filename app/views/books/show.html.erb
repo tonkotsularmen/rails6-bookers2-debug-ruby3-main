@@ -22,6 +22,9 @@
            <td class="favorite_buttons_<%= @book.id %>">
             <%= render "favorites/favorite-btn", book: @book %>
           </td>
+          <td>
+            <%= render "static_rate", book: @book %>
+          </td>
           <% if @book.user == current_user %>
             <td><%= link_to 'Edit', edit_book_path(@book), class: "btn btn-sm btn-success edit_book" %></td>
             <td><%= link_to 'Destroy', @book, method: :delete, data: { confirm: '本当に消しますか？' }, class: "btn btn-sm btn-danger destroy_book"%></td>
