@@ -61,7 +61,7 @@ class BooksController < ApplicationController
   private
 
   def book_params#データベースに保存していいものを許可するメソッド
-    params.require(:book).permit(:title, :body, :star)
+    params.require(:book).permit(:title, :body, :star, :category)
   end
 
   def ensure_correct_user

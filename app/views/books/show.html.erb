@@ -17,6 +17,11 @@
           </td>
           <td><%= link_to @book.title, @book %></td>
           <td><%= @book.body %></td>
+          <td>
+            <% if @book.category.present? %>
+              <%=link_to@book.category,tagsearches_search_path(content:@book.category)%>
+            <% end %>
+          </td>
            <td id="comments_count"><%= render "book_comments/comments_count", book: @book %></td>
            <td>閲覧数：<%= @book.read_counts.count %></td>
            <td class="favorite_buttons_<%= @book.id %>">
